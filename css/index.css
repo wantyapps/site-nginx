@@ -13,3 +13,12 @@ a {
     text-decoration: none;
     color: var(--a-text-color);
 }
+
+.LinksUL {
+    padding: 0;
+    list-style-type: none;
+}
+
+.LinksUL li {
+    margin-bottom: 10px;
+}
