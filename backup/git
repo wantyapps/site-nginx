@@ -1,0 +1,52 @@
+server {
+
+	server_name git.wantyapps.xyz www.git.wantyapps.xyz; 
+
+	location /index.cgi {
+		root /usr/share/gitweb/;
+		include fastcgi_params;
+		gzip off;
+		fastcgi_param SCRIPT_NAME $uri;
+		fastcgi_param GITWEB_CONFIG /etc/gitweb.conf;
+		fastcgi_pass  unix:/var/run/fcgiwrap.socket;
+	}
+
+	location / {
+		root /usr/share/gitweb/;
+		index index.cgi;
+	}
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/wantyapps.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/wantyapps.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+
+
+
+}
+server {
+    if ($host = www.git.wantyapps.xyz) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = git.wantyapps.xyz) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+	listen 80;
+	listen [::]:80;
+
+	server_name git.wantyapps.xyz www.git.wantyapps.xyz;
+    return 404; # managed by Certbot
+
+
+
+
+}
